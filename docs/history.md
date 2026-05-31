@@ -10,9 +10,9 @@
 | 항목 | 내용 |
 |---|---|
 | 마지막 업데이트 | 2026-05-31 |
-| 완료된 Phase | 없음 |
-| 다음 작업 | Phase 0 — Next.js 프로젝트 생성 및 환경 설정 |
-| 빌드 상태 | ⏳ 미확인 |
+| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅ |
+| 다음 작업 | Phase 3 — 면접 노트 및 상세 회고 |
+| 빌드 상태 | ✅ `npx tsc --noEmit` 통과, ESLint 통과 |
 
 ---
 
@@ -20,9 +20,9 @@
 
 | Phase | 내용 | 상태 |
 |---|---|---|
-| 0 | 환경 설정 (Next.js, Prisma, Supabase, NextAuth, shadcn/ui, Resend) | ⏳ |
-| 1 | 레이아웃 / 공통 UI 컴포넌트 (shadcn/ui 기반, Header, Footer) | ⏳ |
-| 2 | 지원 기록 및 전형 단계 관리 (API Routes + Prisma CRUD) | ⏳ |
+| 0 | 환경 설정 (Next.js, Prisma, Supabase, NextAuth, shadcn/ui, Resend) | ✅ |
+| 1 | 레이아웃 / 공통 UI 컴포넌트 (shadcn/ui 기반, Header, Footer) | ✅ |
+| 2 | 지원 기록 및 전형 단계 관리 (API Routes + Prisma CRUD) | ✅ |
 | 3 | 면접 노트 및 상세 회고 (질문/답변, 잘한 점, 부족했던 점, 개선점) | ⏳ |
 | 4 | 통합 캘린더 및 D-Day 표시 (react-big-calendar + Vercel Cron + Resend 알림) | ⏳ |
 | 5 | 개인 맞춤형 대시보드 (Recharts 차트, 지원 현황 요약) | ⏳ |
@@ -36,9 +36,26 @@
 ```
 hirestory/
 ├── CLAUDE.md
+├── vercel.json
+├── components.json          ← shadcn/ui 설정
+├── prisma/
+│   └── schema.prisma        ← User, Application, InterviewNote, Question, Account, Session
 ├── docs/
 │   └── history.md
-└── (초기 상태 — Phase 0 완료 후 업데이트)
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/
+│   │   └── ui/
+│   │       └── button.tsx   ← shadcn/ui Button
+│   └── lib/
+│       ├── prisma.ts        ← Prisma Client 싱글턴
+│       ├── resend.ts        ← Resend 클라이언트
+│       ├── formatDate.ts    ← formatDate / getDDay
+│       └── utils.ts         ← cn() (shadcn 생성)
+└── public/
 ```
 
 ---
@@ -72,28 +89,35 @@ hirestory/
 
 ## 완료된 작업 상세
 
-### Phase 0 — 환경 설정
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  - [ ] Next.js 15 프로젝트 생성 (TypeScript strict)
-  - [ ] Tailwind CSS + shadcn/ui 설치
-  - [ ] Prisma 설치 + Supabase PostgreSQL 연결
-  - [ ] NextAuth 설치 및 기본 설정
-  - [ ] Resend 설치
-  - [ ] Recharts, react-big-calendar 설치
-  - [ ] ESLint 설정
-  - [ ] `src/lib/prisma.ts` — Prisma Client 싱글턴
-  - [ ] `src/lib/auth.ts` — NextAuth 설정
-  - [ ] `src/lib/resend.ts` — Resend 클라이언트
-  - [ ] `src/lib/cn.ts` — 클래스 병합 유틸
-  - [ ] `src/lib/formatDate.ts` — 날짜/D-Day 유틸
-  - [ ] `.env.local` 구성 (DATABASE_URL, NEXTAUTH_SECRET, RESEND_API_KEY 등)
-  - [ ] `vercel.json` — Cron Jobs 설정
+### Phase 0 — 환경 설정 ✅
+- [x] 완료 날짜: 2026-05-31
+- [x] 작업 내용:
+  - [x] Next.js 15 프로젝트 생성 (TypeScript strict, App Router, Tailwind)
+  - [x] shadcn/ui 초기화 (`components.json`, `button.tsx`, `utils.ts`)
+  - [x] Prisma 설치 + `schema.prisma` 전체 모델 작성
+        (User, Application/ApplicationStage enum, InterviewNote, Question, NextAuth 모델)
+  - [x] NextAuth beta 설치
+  - [x] Resend 설치
+  - [x] Recharts, react-big-calendar, @types/react-big-calendar 설치
+  - [x] `src/lib/prisma.ts` — Prisma Client 싱글턴
+  - [x] `src/lib/resend.ts` — Resend 클라이언트
+  - [x] `src/lib/formatDate.ts` — formatDate / getDDay 유틸
+  - [x] `.env.local` — 키 목록 구성 (값은 미입력, Supabase 연결 시 채울 것)
+  - [x] `vercel.json` — Cron Jobs 설정 (매일 오전 9시 D-Day 알림)
+  - [x] GitHub remote 연결 (`https://github.com/zzizi6/hirestory.git`)
+  - [x] `npx tsc --noEmit` 통과
+  - [ ] **미완료**: Supabase 프로젝트 생성 및 `DATABASE_URL` / `DIRECT_URL` 입력
+  - [ ] **미완료**: `prisma migrate dev` 실행하여 DB 테이블 생성
+  - [ ] **미완료**: `src/lib/auth.ts` — NextAuth 설정 파일 작성
 
-### Phase 1 — 레이아웃 / 공통 UI 컴포넌트
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  -
+### Phase 1 — 레이아웃 / 공통 UI 컴포넌트 ✅
+- [x] 완료 날짜: 2026-05-31
+- [x] 작업 내용:
+  - [x] `src/components/layout/Header.tsx` — sticky 헤더, 로고(Briefcase 아이콘), 네비게이션 4개, 로그인 버튼
+  - [x] `src/components/layout/Footer.tsx` — copyright 푸터
+  - [x] `src/app/layout.tsx` — metadata 한국어화, lang="ko", Header/Footer 삽입
+  - [x] `src/app/page.tsx` — 랜딩 페이지 (Hero + 핵심 기능 3개 카드)
+  - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
 ### Phase 2 — 지원 기록 및 전형 단계 관리
 - [ ] 완료 날짜: YYYY-MM-DD

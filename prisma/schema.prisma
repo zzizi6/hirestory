@@ -27,8 +27,10 @@ model Application {
   position       String
   postingUrl     String?
   appliedAt      DateTime
-  stage          ApplicationStage   @default(APPLIED)
-  memo           String?
+  stage               ApplicationStage   @default(APPLIED)
+  hasAptitude         Boolean            @default(false)
+  hasSecondInterview  Boolean            @default(false)
+  memo                String?
   deadlineAt     DateTime?
   interviewAt    DateTime?
   resultAt       DateTime?
@@ -41,13 +43,14 @@ model Application {
 }
 
 enum ApplicationStage {
-  APPLIED   // 지원
-  DOCUMENT  // 서류
-  APTITUDE  // 인적성
-  INTERVIEW // 면접
-  FINAL     // 최종
-  PASSED    // 합격
-  FAILED    // 불합격
+  APPLIED      // 지원
+  DOCUMENT     // 서류
+  APTITUDE     // 인적성
+  INTERVIEW_1  // 면접 1차
+  INTERVIEW_2  // 면접 2차
+  FINAL        // 최종
+  PASSED       // 합격
+  FAILED       // 불합격
 }
 
 model InterviewNote {
