@@ -10,8 +10,8 @@
 | 항목 | 내용 |
 |---|---|
 | 마지막 업데이트 | 2026-06-04 |
-| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅, Phase 3 ✅, Phase 4 ✅, Phase 5 ✅ |
-| 다음 작업 | Phase 6 — 데이터 시각화 및 분석 |
+| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅, Phase 3 ✅, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅ |
+| 다음 작업 | Phase 7 — 마무리 (NextAuth 인증 완성, Supabase 실배포, SEO, 성능 최적화, 배포) |
 | 빌드 상태 | ✅ `npx tsc --noEmit` 통과, ESLint 통과 |
 
 ---
@@ -26,7 +26,7 @@
 | 3 | 면접 노트 및 상세 회고 (질문/답변, 잘한 점, 부족했던 점, 개선점) | ✅ |
 | 4 | 통합 캘린더 및 D-Day 표시 (react-big-calendar + Vercel Cron + Resend 알림) | ✅ |
 | 5 | 개인 맞춤형 대시보드 (Recharts 차트, 지원 현황 요약) | ✅ |
-| 6 | 데이터 시각화 및 분석 (추이 차트, 전환율, 자주 나온 질문 유형) | ⏳ |
+| 6 | 데이터 시각화 및 분석 (추이 차트, 전환율, 자주 나온 질문 유형) | ✅ |
 | 7 | 마무리 (NextAuth 인증 완성, Supabase Storage, SEO, 성능 최적화, 배포) | ⏳ |
 
 ---
@@ -174,10 +174,15 @@ hirestory/
   - [x] `src/app/dashboard/page.tsx` — 대시보드 페이지 (Server Component)
   - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
-### Phase 6 — 데이터 시각화 및 분석
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  -
+### Phase 6 — 데이터 시각화 및 분석 ✅
+- [x] 완료 날짜: 2026-06-04
+- [x] 작업 내용:
+  - [x] `src/types/analytics.ts` — ConversionRate, InterviewTypeCount, AnalyticsData 타입
+  - [x] `src/app/api/analytics/route.ts` — 전환율 3단계 계산 + 면접 유형별 건수 집계
+  - [x] `src/components/features/dashboard/ConversionFunnel.tsx` — 수평 막대 전환율 차트 + 수치 카드
+  - [x] `src/components/features/dashboard/InterviewTypeChart.tsx` — Recharts PieChart 면접 유형별 시각화
+  - [x] `src/app/dashboard/page.tsx` — analytics 섹션 2개 추가 (전환율, 면접유형)
+  - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
 ### Phase 7 — 마무리
 - [ ] 완료 날짜: YYYY-MM-DD

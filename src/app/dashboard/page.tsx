@@ -1,7 +1,10 @@
 import { SummaryCards } from "@/components/features/dashboard/SummaryCards";
 import { StageBarChart } from "@/components/features/dashboard/StageBarChart";
 import { MonthlyLineChart } from "@/components/features/dashboard/MonthlyLineChart";
+import { ConversionFunnel } from "@/components/features/dashboard/ConversionFunnel";
+import { InterviewTypeChart } from "@/components/features/dashboard/InterviewTypeChart";
 import type { DashboardData } from "@/types/dashboard";
+import type { AnalyticsData } from "@/types/analytics";
 
 async function getDashboardData(): Promise<DashboardData> {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/dashboard`, {
@@ -13,8 +16,21 @@ async function getDashboardData(): Promise<DashboardData> {
   return res.json();
 }
 
+async function getAnalyticsData(): Promise<AnalyticsData> {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/analytics`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    return { conversionRates: [], interviewTypes: [] };
+  }
+  return res.json();
+}
+
 export default async function DashboardPage() {
-  const data = await getDashboardData();
+  const [data, analytics] = await Promise.all([
+    getDashboardData(),
+    getAnalyticsData(),
+  ]);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-10">
@@ -60,6 +76,32 @@ export default async function DashboardPage() {
             월별 지원 추이
           </h2>
           <MonthlyLineChart data={data.byMonth} />
+        </section>
+
+        <section
+          aria-labelledby="conversion-heading"
+          className="rounded-xl border border-border bg-background p-6"
+        >
+          <h2
+            id="conversion-heading"
+            className="mb-4 text-base font-semibold text-foreground"
+          >
+            전형 단계 전환율
+          </h2>
+          <ConversionFunnel data={analytics.conversionRates} />
+        </section>
+
+        <section
+          aria-labelledby="interview-type-heading"
+          className="rounded-xl border border-border bg-background p-6"
+        >
+          <h2
+            id="interview-type-heading"
+            className="mb-4 text-base font-semibold text-foreground"
+          >
+            면접 유형별 현황
+          </h2>
+          <InterviewTypeChart data={analytics.interviewTypes} />
         </section>
       </div>
     </div>
