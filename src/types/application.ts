@@ -57,6 +57,9 @@ export interface Application {
   hasAptitude: boolean;
   hasSecondInterview: boolean;
   memo: string;
+  deadlineAt: string | null;
+  interviewAt: string | null;
+  resultAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

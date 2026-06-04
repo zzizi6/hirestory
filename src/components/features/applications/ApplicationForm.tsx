@@ -17,6 +17,9 @@ const initialFormData: ApplicationFormData = {
   hasAptitude: false,
   hasSecondInterview: false,
   memo: "",
+  deadlineAt: null,
+  interviewAt: null,
+  resultAt: null,
 };
 
 interface ApplicationFormProps {
@@ -190,6 +193,58 @@ export function ApplicationForm({ onSubmit }: ApplicationFormProps) {
           ))}
         </select>
       </div>
+
+      {/* 일정 */}
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-medium text-foreground">일정 (선택)</legend>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div className="space-y-1.5">
+            <label htmlFor="deadlineAt" className="text-xs text-muted-foreground">
+              지원 마감일
+            </label>
+            <input
+              id="deadlineAt"
+              name="deadlineAt"
+              type="date"
+              value={form.deadlineAt ?? ""}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, deadlineAt: e.target.value || null }))
+              }
+              className={FIELD_BASE}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="interviewAt" className="text-xs text-muted-foreground">
+              면접일
+            </label>
+            <input
+              id="interviewAt"
+              name="interviewAt"
+              type="date"
+              value={form.interviewAt ?? ""}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, interviewAt: e.target.value || null }))
+              }
+              className={FIELD_BASE}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="resultAt" className="text-xs text-muted-foreground">
+              결과 발표일
+            </label>
+            <input
+              id="resultAt"
+              name="resultAt"
+              type="date"
+              value={form.resultAt ?? ""}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, resultAt: e.target.value || null }))
+              }
+              className={FIELD_BASE}
+            />
+          </div>
+        </div>
+      </fieldset>
 
       {/* 메모 */}
       <div className="space-y-1.5">

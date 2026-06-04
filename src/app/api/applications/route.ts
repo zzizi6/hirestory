@@ -20,6 +20,9 @@ export async function GET() {
       hasAptitude: row.hasAptitude,
       hasSecondInterview: row.hasSecondInterview,
       memo: row.memo ?? "",
+      deadlineAt: row.deadlineAt ? row.deadlineAt.toISOString().split("T")[0] : null,
+      interviewAt: row.interviewAt ? row.interviewAt.toISOString().split("T")[0] : null,
+      resultAt: row.resultAt ? row.resultAt.toISOString().split("T")[0] : null,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     }));
@@ -46,6 +49,9 @@ export async function POST(req: Request) {
       hasAptitude: boolean;
       hasSecondInterview: boolean;
       memo?: string;
+      deadlineAt?: string | null;
+      interviewAt?: string | null;
+      resultAt?: string | null;
     };
 
     const user = await prisma.user.findUnique({
@@ -68,6 +74,9 @@ export async function POST(req: Request) {
         hasAptitude: body.hasAptitude,
         hasSecondInterview: body.hasSecondInterview,
         memo: body.memo ?? null,
+        deadlineAt: body.deadlineAt ? new Date(body.deadlineAt) : null,
+        interviewAt: body.interviewAt ? new Date(body.interviewAt) : null,
+        resultAt: body.resultAt ? new Date(body.resultAt) : null,
       },
     });
 

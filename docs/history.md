@@ -10,8 +10,8 @@
 | 항목 | 내용 |
 |---|---|
 | 마지막 업데이트 | 2026-06-04 |
-| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅, Phase 3 ✅ |
-| 다음 작업 | Phase 4 — 통합 캘린더 및 D-Day 표시 |
+| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅, Phase 3 ✅, Phase 4 ✅ |
+| 다음 작업 | Phase 5 — 개인 맞춤형 대시보드 |
 | 빌드 상태 | ✅ `npx tsc --noEmit` 통과, ESLint 통과 |
 
 ---
@@ -24,7 +24,7 @@
 | 1 | 레이아웃 / 공통 UI 컴포넌트 (shadcn/ui 기반, Header, Footer) | ✅ |
 | 2 | 지원 기록 및 전형 단계 관리 (API Routes + Prisma CRUD) | ✅ |
 | 3 | 면접 노트 및 상세 회고 (질문/답변, 잘한 점, 부족했던 점, 개선점) | ✅ |
-| 4 | 통합 캘린더 및 D-Day 표시 (react-big-calendar + Vercel Cron + Resend 알림) | ⏳ |
+| 4 | 통합 캘린더 및 D-Day 표시 (react-big-calendar + Vercel Cron + Resend 알림) | ✅ |
 | 5 | 개인 맞춤형 대시보드 (Recharts 차트, 지원 현황 요약) | ⏳ |
 | 6 | 데이터 시각화 및 분석 (추이 차트, 전환율, 자주 나온 질문 유형) | ⏳ |
 | 7 | 마무리 (NextAuth 인증 완성, Supabase Storage, SEO, 성능 최적화, 배포) | ⏳ |
@@ -148,10 +148,20 @@ hirestory/
   - [x] `src/app/interviews/new/page.tsx` — InterviewNoteForm 래퍼
   - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
-### Phase 4 — 통합 캘린더 및 D-Day 표시
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  -
+### Phase 4 — 통합 캘린더 및 D-Day 표시 ✅
+- [x] 완료 날짜: 2026-06-04
+- [x] 작업 내용:
+  - [x] `src/types/calendar.ts` — CalendarEvent, CalendarEventType 타입
+  - [x] `src/types/application.ts` — deadlineAt / interviewAt / resultAt 필드 추가
+  - [x] `src/app/api/applications/route.ts` — GET/POST 날짜 3개 반영
+  - [x] `src/app/api/applications/[id]/route.ts` — PATCH 날짜 3개 반영
+  - [x] `src/components/features/applications/ApplicationForm.tsx` — 일정 입력 필드 3개 추가
+  - [x] `src/app/api/calendar/route.ts` — Application 날짜를 CalendarEvent로 통합 반환
+  - [x] `src/components/features/calendar/CalendarView.tsx` — react-big-calendar (momentLocalizer, 한국어)
+  - [x] `src/app/calendar/page.tsx` — 캘린더 페이지 + 색상 범례
+  - [x] `src/app/api/cron/notify-dday/route.ts` — Vercel Cron D-Day 당일 Resend 이메일 알림
+  - [x] `npx tsc --noEmit` 통과, ESLint 통과
+  - [ ] **참고**: `.env.local`에 `CRON_SECRET` 추가 필요
 
 ### Phase 5 — 개인 맞춤형 대시보드
 - [ ] 완료 날짜: YYYY-MM-DD

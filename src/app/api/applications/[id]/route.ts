@@ -25,6 +25,9 @@ export async function PATCH(
       hasAptitude: boolean;
       hasSecondInterview: boolean;
       memo: string;
+      deadlineAt: string | null;
+      interviewAt: string | null;
+      resultAt: string | null;
     }>;
 
     const data: Record<string, unknown> = {};
@@ -38,6 +41,9 @@ export async function PATCH(
     if (body.hasAptitude !== undefined) data.hasAptitude = body.hasAptitude;
     if (body.hasSecondInterview !== undefined) data.hasSecondInterview = body.hasSecondInterview;
     if (body.memo !== undefined) data.memo = body.memo;
+    if (body.deadlineAt !== undefined) data.deadlineAt = body.deadlineAt ? new Date(body.deadlineAt) : null;
+    if (body.interviewAt !== undefined) data.interviewAt = body.interviewAt ? new Date(body.interviewAt) : null;
+    if (body.resultAt !== undefined) data.resultAt = body.resultAt ? new Date(body.resultAt) : null;
 
     await prisma.application.update({ where: { id }, data });
 
