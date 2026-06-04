@@ -9,9 +9,9 @@
 
 | 항목 | 내용 |
 |---|---|
-| 마지막 업데이트 | 2026-05-31 |
-| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅ |
-| 다음 작업 | Phase 3 — 면접 노트 및 상세 회고 |
+| 마지막 업데이트 | 2026-06-04 |
+| 완료된 Phase | Phase 0 ✅, Phase 1 ✅, Phase 2 ✅, Phase 3 ✅ |
+| 다음 작업 | Phase 4 — 통합 캘린더 및 D-Day 표시 |
 | 빌드 상태 | ✅ `npx tsc --noEmit` 통과, ESLint 통과 |
 
 ---
@@ -23,7 +23,7 @@
 | 0 | 환경 설정 (Next.js, Prisma, Supabase, NextAuth, shadcn/ui, Resend) | ✅ |
 | 1 | 레이아웃 / 공통 UI 컴포넌트 (shadcn/ui 기반, Header, Footer) | ✅ |
 | 2 | 지원 기록 및 전형 단계 관리 (API Routes + Prisma CRUD) | ✅ |
-| 3 | 면접 노트 및 상세 회고 (질문/답변, 잘한 점, 부족했던 점, 개선점) | ⏳ |
+| 3 | 면접 노트 및 상세 회고 (질문/답변, 잘한 점, 부족했던 점, 개선점) | ✅ |
 | 4 | 통합 캘린더 및 D-Day 표시 (react-big-calendar + Vercel Cron + Resend 알림) | ⏳ |
 | 5 | 개인 맞춤형 대시보드 (Recharts 차트, 지원 현황 요약) | ⏳ |
 | 6 | 데이터 시각화 및 분석 (추이 차트, 전환율, 자주 나온 질문 유형) | ⏳ |
@@ -119,15 +119,34 @@ hirestory/
   - [x] `src/app/page.tsx` — 랜딩 페이지 (Hero + 핵심 기능 3개 카드)
   - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
-### Phase 2 — 지원 기록 및 전형 단계 관리
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  -
+### Phase 2 — 지원 기록 및 전형 단계 관리 ✅
+- [x] 완료 날짜: 2026-06-04
+- [x] 작업 내용:
+  - [x] `src/types/application.ts` — ApplicationStage, buildStages(), STAGE_TO_KOREAN, KOREAN_TO_STAGE
+  - [x] `src/components/features/applications/StageBadge.tsx` — 단계별 색상 뱃지
+  - [x] `src/components/features/applications/ApplicationForm.tsx` — 인적성/면접 2차 체크박스, 동적 단계 드롭다운, POST API 연결
+  - [x] `src/components/features/applications/ApplicationCard.tsx` — 카드 컴포넌트
+  - [x] `src/app/applications/page.tsx` — GET /api/applications fetch
+  - [x] `src/app/applications/new/page.tsx` — ApplicationForm 래퍼
+  - [x] `src/app/api/applications/route.ts` — GET(전체) + POST(인증 필요)
+  - [x] `src/app/api/applications/[id]/route.ts` — PATCH + DELETE (인증 필요)
+  - [x] `src/lib/auth.ts` — NextAuth v5 기본 설정
+  - [x] `src/app/api/auth/[...nextauth]/route.ts` — handlers export
+  - [x] `prisma/schema.prisma` — INTERVIEW_1/2 분리, hasAptitude/hasSecondInterview 추가
+  - [x] `prisma.config.ts` — .env.local 직접 로드, directUrl 추가
+  - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
-### Phase 3 — 면접 노트 및 상세 회고
-- [ ] 완료 날짜: YYYY-MM-DD
-- [ ] 작업 내용:
-  -
+### Phase 3 — 면접 노트 및 상세 회고 ✅
+- [x] 완료 날짜: 2026-06-04
+- [x] 작업 내용:
+  - [x] `src/types/interview.ts` — InterviewNote, InterviewQuestion, InterviewNoteFormData, INTERVIEW_TYPES
+  - [x] `src/app/api/interviews/route.ts` — GET(전체, questions/application 포함) + POST(인증 필요)
+  - [x] `src/app/api/interviews/[id]/route.ts` — PATCH + DELETE (인증 필요)
+  - [x] `src/components/features/interviews/InterviewNoteCard.tsx` — 면접 노트 카드
+  - [x] `src/components/features/interviews/InterviewNoteForm.tsx` — 지원 기록 드롭다운, Q&A 동적 추가/삭제, 회고 3항목
+  - [x] `src/app/interviews/page.tsx` — GET /api/interviews fetch, 목록 렌더링
+  - [x] `src/app/interviews/new/page.tsx` — InterviewNoteForm 래퍼
+  - [x] `npx tsc --noEmit` 통과, ESLint 통과
 
 ### Phase 4 — 통합 캘린더 및 D-Day 표시
 - [ ] 완료 날짜: YYYY-MM-DD
